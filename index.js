@@ -1,12 +1,11 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 
-// TODO: Create an array of questions for user input
 inquirer
     .prompt([
         {
             type: 'input',
-            name: 'projectTitle',
+            name: 'title',
             message: 'What is the title of your project?'
         },
         {
@@ -21,12 +20,12 @@ inquirer
         },
         {
             type: 'input',
-            name: 'projectUsage',
+            name: 'usage',
             message: 'What is your project used for?'
         },
         {
             type: 'input',
-            name: 'projectLicense',
+            name: 'license',
             message: 'Please list all appropriate licenses for your project: '
         },
         {
@@ -36,8 +35,13 @@ inquirer
         },
         {
             type: 'input',
+            name: 'test',
+            message: 'Are there tests associated with your project?'
+        },
+        {
+            type: 'input',
             name: 'issue',
-            message: 'What are the steps necessary if there is an issue? '
+            message: 'What are the steps necessary if there is an issue?'
         },
         {
             type: 'input',
@@ -51,18 +55,65 @@ inquirer
         },
     ])
 
-    .then((response) =>
-    fs.appendFile('./log.tx', JSON.stringify(response)), (err) => console.log(err));
-
-
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, data, (err) =>
+        err ? console.error(err) : console.log(success)
+    );
+}
+
 
 // TODO: Create a function to initialize app
-function init() {}
-    // ask questions
-    // assemble Answers
-    // 
+async function init() {
+    const reply = await prompt();
+    console.log(reply);
+    writeHTML(reply)
+}
+
+function writeHTML(data) {
+    const html = `
+
+Name:
+${data.name}
+
+Description:
+${data.description}
+
+GitHub Username:
+${data.githubUsername}
+
+User email:
+${data.userEmail}
+
+Title:
+${data.title}
+
+## Table of Contents 
+
+Description:
+${data.description}
+
+License:
+${data.license}
+
+Tests:
+${data.test}
+
+Usage:
+${data.usage}
+
+Contributors:
+${data.contributors}
+
+Installation:
+${data.installation}
+
+
+</html>`
+
+    fs.writeFile(`${data.name.replace(/ /g, '')}.md`, html, (err) => console.log(err || 'success!'))
+
+}
 
 // Function call to initialize app
 init();
