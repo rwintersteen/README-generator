@@ -1,59 +1,67 @@
-const inquirer = require('inquirer');
+const { prompt } = require('inquirer');
 const fs = require('fs');
 
-inquirer
-    .prompt([
-        {
-            type: 'input',
-            name: 'title',
-            message: 'What is the title of your project?'
-        },
-        {
-            type: 'input',
-            name: 'description',
-            message: 'Write of brief description of your project: '
-        },
-        {
-            type: 'input',
-            name: 'installation',
-            message: 'Describe the installation process of your project if applicable.'
-        },
-        {
-            type: 'input',
-            name: 'usage',
-            message: 'What is your project used for?'
-        },
-        {
-            type: 'input',
-            name: 'license',
-            message: 'Please list all appropriate licenses for your project: '
-        },
-        {
-            type: 'input',
-            name: 'contributors',
-            message: 'Please list all contributors to your project, including yourself: '
-        },
-        {
-            type: 'input',
-            name: 'test',
-            message: 'Are there tests associated with your project?'
-        },
-        {
-            type: 'input',
-            name: 'issue',
-            message: 'What are the steps necessary if there is an issue?'
-        },
-        {
-            type: 'input',
-            name: 'githubUsername',
-            message: 'Please enter your Github username: '
-        },
-        {
-            type: 'input',
-            name: 'userEmail',
-            message: 'Please enter your email: '
-        },
-    ])
+const questions = [
+    {
+        type: 'input',
+        name: 'name',
+        message: 'What is your name?'
+    },
+
+    {
+        type: 'input',
+        name: 'title',
+        message: 'What is the title of your project?'
+    },
+
+    {
+        type: 'input',
+        name: 'description',
+        message: 'Write of brief description of your project: '
+    },
+
+    {
+        type: 'input',
+        name: 'usage',
+        message: 'What is your project used for?'
+    },
+
+    {
+        type: 'input',
+        name: 'githubUsername',
+        message: 'Please enter your Github username: '
+    },
+
+    {
+        type: 'input',
+        name: 'userEmail',
+        message: 'Please enter your email: '
+    },
+
+    {
+        type: 'input',
+        name: 'license',
+        message: 'Please list all appropriate licenses for your project: '
+    },
+
+    {
+        type: 'input',
+        name: 'test',
+        message: 'Are there tests associated with your project?'
+    },
+
+    {
+        type: 'input',
+        name: 'contributors',
+        message: 'Please list all contributors to your project, including yourself: '
+    },
+
+    {
+        type: 'input',
+        name: 'installation',
+        message: 'What is the code to install your project?'
+    },
+]
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
@@ -65,16 +73,18 @@ function writeToFile(fileName, data) {
 
 // TODO: Create a function to initialize app
 async function init() {
-    const reply = await prompt();
+    const reply = await prompt(questions);
     console.log(reply);
-    writeHTML(reply)
+    writeToFile(reply)
 }
 
-function writeHTML(data) {
+function writeToFile(data) {
     const html = `
-
 Name:
 ${data.name}
+
+Title:
+${data.title}
 
 Description:
 ${data.description}
@@ -85,13 +95,8 @@ ${data.githubUsername}
 User email:
 ${data.userEmail}
 
-Title:
-${data.title}
 
 ## Table of Contents 
-
-Description:
-${data.description}
 
 License:
 ${data.license}
@@ -108,10 +113,9 @@ ${data.contributors}
 Installation:
 ${data.installation}
 
+`
 
-</html>`
-
-    fs.writeFile(`${data.name.replace(/ /g, '')}.md`, html, (err) => console.log(err || 'success!'))
+    fs.writeFile(`${data.name.replace(/ /g, '')}.md`, html, (err) => console.log(err || 'Your README file has been successfully created!'))
 
 }
 
