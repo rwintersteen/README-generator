@@ -95,7 +95,6 @@ ${data.githubUsername}
 User email:
 ${data.userEmail}
 
-
 ## Table of Contents 
 
 License:
@@ -112,7 +111,6 @@ ${data.contributors}
 
 Installation:
 ${data.installation}
-
 `
 
     fs.writeFile(`${data.name.replace(/ /g, '')}.md`, html, (err) => console.log(err || 'Your README file has been successfully created!'))
