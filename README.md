@@ -30,3 +30,6 @@ Rachael Wintersteen
 
 Installation:
 npm i
+
+
+[Preview of generating a README.md file](https://drive.google.com/file/d/1gyzaPkLcxyu0W75M1DcOeHidvsLUSScn/view)
